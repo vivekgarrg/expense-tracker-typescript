@@ -47,7 +47,6 @@ class ExpenseController {
 
       let total = 0;
       expense.forEach((val: expense) => {
-        console.log(val.amount);
         total += val.amount || 0;
       });
 
@@ -74,6 +73,33 @@ class ExpenseController {
       if (expense) {
         res.status(httpStatusCodes.OK).json({
           message: "Expense Fetched Successfully",
+          expense,
+        });
+      } else {
+        throw new ErrorHandler(
+          httpStatusCodes.BAD_REQUEST,
+          `No expense found with id: ${req.params.id}!!`
+        );
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateExpenseById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const expense = await ExpenseModel.findByIdAndUpdate(
+        req.body.id,
+        {
+          amount: req.body.amount,
+          remarks: req.body.remarks,
+          date: req.body.date,
+        },
+        { new: true }
+      );
+      if (expense) {
+        res.status(httpStatusCodes.OK).json({
+          message: "Expense Updated Successfully",
           expense,
         });
       } else {

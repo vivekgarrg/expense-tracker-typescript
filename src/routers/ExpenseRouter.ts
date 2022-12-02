@@ -14,9 +14,10 @@ class SurveyRouter {
   }
 
   private _configure() {
+    this._router.get("/", this._controller.getAllExpense);
+    this._router.put("/", this._controller.updateExpenseById);
     this._router.post("/", this._controller.addExpense);
     this.router.delete("/", this._controller.deleteExpense);
-    this._router.get("/", this._controller.getAllExpense);
     this.router.get("/:id", this._controller.getExpenseById);
   }
 }
