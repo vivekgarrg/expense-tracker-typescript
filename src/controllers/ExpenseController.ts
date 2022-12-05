@@ -94,6 +94,7 @@ class ExpenseController {
           amount: req.body.amount,
           remarks: req.body.remarks,
           date: req.body.date,
+          payment_mode: req.body.payment_mode,
         },
         { new: true }
       );
